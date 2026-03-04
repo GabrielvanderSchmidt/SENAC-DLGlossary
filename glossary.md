@@ -22,6 +22,19 @@ Proporciona a não-linearidade que **camadas neurais** precisam para poderem **a
 #### Batch Normalization
 É uma camada que **padroniza** os dados fluindo dentro da rede a cada **batch**, possuindo um efeito de **regularização** para o modelo que ajuda a prevenir **overfitting**. Não é uma camada neural, mas possui alguns **parâmetros** aprendidos: um coeficiente $$\gamma$$ e bias $$\beta$$ que escalam os dados após a padronização ($$BN = \gamma \hat{x} + \beta$$, onde $$BN$$ é a saída dessa camada e $$\hat{x}$$ são os valores de entrada padronizados), e uma média e desvio padrão populacionais estimados durante o treinamento que ficam fixos durante **inferência**.
 
+#### Dropout
+É uma camada que durante o treinamento aleatoriamente desativa alguns **neurônios**, dada uma probabilidade $$p$$ (**dropout rate**), barrando a propagação de seus resultados adiante. Isso efetivamente força a rede distribuir o conhecimento em todos os seus neurônios, impedindo que um subconjunto de ativações tenha efeito desproporcional sobre a saída da rede, atuando como um fator de **regularização** que contribui para melhor **convergência** e **generalização**, resultando em modelos mais robustos e com menos risco de **overfitting**.
+
+
+# Arquiteturas
+
+#### Rede Feedforward
+É um tipo de **rede neural** onde o fluxo de informação sempre segue em uma mesma direção e o grafo da rede não forma ciclos. Corresponde à maioria dos modelos comumente usados, como **MLPs**/redes densas, a maioria das **CNNs**, **autoencoders**, **transformers**, etc.
+
+#### Rede Recursiva
+É um tipo de **rede neural** onde o fluxo de informação pode ser retroalimentado na rede pois o grafo da rede forma ciclos. Corresponde a certas arquiteturas voltadas ao tratamento de dependências temporais ou sequenciais, como **LSTMs**, **GRUs**, ou modelos **mamba**.
+
+
 # Termos e Conceitos
 
 
@@ -30,3 +43,12 @@ No contexto de **machine learning**, significa melhorar o desempenho de um algor
 
 #### Descida de Gradiente Estocástica (SGD)
 Algoritmo basilar do aprendizado de **redes neurais artificiais**. É um algoritmo iterativo que ajusta os **parâmetros** de um modelo na direção oposta ao seu **gradiente**, minimizando sua **loss function**. Essa descida de gradiente é estocástica pois opera em **estimativas** do gradiente global (o gradiente calculado sobre o **dataset** inteiro) obtidas a partir do gradiente calculado em **batches** (amostras) dos dados.
+
+#### Regularização
+Pode ser entendido como um processo que busca aumentar a **generalização** de um modelo e reduzir o risco de **overfitting**. Enquanto o processo de **otimização** busca maximizar o desempenho no **conjunto de treino**, técnicas de regularização tentam trocar um pouco do desempenho de treino por melhor desempenho em **dados não vistos**. Regularização pode se manifestar como um termo explícito na **loss function** (como regularização **L1/Lasso** ou **L2/Ridge**), ou como uma variedade de técnicas que implicitamente buscam mitigar overfitting, como **data augmentation**, **weight decay**, **batch normalization**, **dropout**, **early stopping**, e outras.
+
+#### Underfitting
+É quando um modelo é incapaz de modelar a distribuição dos dados de treino ("modelo simples, problema complexo"), indica um modelo **high bias** no **trade-off viés-variância**. Indícios clássicos de um modelo underfit são baixo desempenho em ambos **conjuntos de treino** e **de validação**. Comumente causado por um modelo com baixa **capacidade de representação** (poucos **parâmetros** ou **camadas**), alta complexidade do problema, **regularização** excessiva, ou uso de dados com baixo poder preditivo ($$X \nRightarrow y$$). Métodos de mitigação incluem o uso de modelos maiores/mais complexos, treino por mais tempo e/ou com novos dados, e redução de regularização.
+
+#### Overfitting
+É quando um modelo ajusta excessivamente aos dados de treino, modelando não só a distribuição subjacente mas também o ruído intrínseco aos dados observados ("modelo complexo, problema simples"), indica um modelo **high variance** no **trade-off viés-variância**. Indícios clássicos de um modelo overfit são alto desempenho no **conjunto de treino**, mas baixo desempenho no **conjunto de validação**. Comumente causado por um modelo com alta **capacidade de representação** (**parâmetros** ou **camadas** demais), baixa complexidade do problema, **regularização** insuficiente, ou uso de dados ruidosos ou em quantidade insuficiente. Métodos de mitigação incluem o uso de modelos menores/mais simples, treino por menos tempo e/ou com mais dados, e aumento de regularização.

@@ -28,11 +28,20 @@ Proporciona a não-linearidade que **camadas neurais** precisam para poderem **a
 
 # Arquiteturas
 
-#### Rede Feedforward
+#### Rede Feedforward (Feedforward Network - FFN)
 É um tipo de **rede neural** onde o fluxo de informação sempre segue em uma mesma direção e o grafo da rede não forma ciclos. Corresponde à maioria dos modelos comumente usados, como **MLPs**/redes densas, a maioria das **CNNs**, **autoencoders**, **transformers**, etc.
 
-#### Rede Recursiva
+#### Rede Recursiva (Recursive Neural Network - RNN)
 É um tipo de **rede neural** onde o fluxo de informação pode ser retroalimentado na rede pois o grafo da rede forma ciclos. Corresponde a certas arquiteturas voltadas ao tratamento de dependências temporais ou sequenciais, como **LSTMs**, **GRUs**, ou modelos **mamba**.
+
+#### Rede Convolucional (Convolutional Neural Network - CNN)
+Nome genérico para **redes neurais** que possuem **camadas convolucionais** como seu mecanismo interno principal. Corresponde à maioria das arquiteturas voltadas para o **tratamento de imagens**, mas também aparecendo no **processamento de áudio** (convoluções 1D sobre o sinal de áudio bruto ou convoluções 2D sobre o **espectrograma** do áudio) e até alguns **modelos de linguagem**.
+
+#### U-Net
+Um tipo de **CNN** onde a rede segue um formato de "ampulheta", onde os **feature maps** primeiro reduzem em dimensão (altura x largura) até culminarem em um **gargalo** central, após o qual os feature maps voltam a aumentar em tamanho, geralmente até retornarem ao tamanho original da imagem de entrada. A diferença estrutural principal entre U-Nets e **CNN autoencoders** é que U-Nets possuem **skip connections** conectando níveis hierárquicos correspondentes nos dois lados da "ampulheta" (ex.: Bloco de entrada conectado com bloco de saída; primeiro bloco antes do gargalo com o primeiro bloco após o gargalo; etc).
+
+#### Autoencoder
+Nome dado a redes seguindo um esquema de **aprendizado não supervisionado** onde o modelo deve aproximar uma **função identidade** ($$f(X)=X$$) apesar do fluxo de informação passar por um **gargalo** informacional. Esse gargalo separa a rede em duas sub-redes: o **encoder** que projeta entradas $$X$$ para um **espaço latente** $$Z$$; e o **decoder** que gera uma reconstrução $$\hat{X}$$ a partir de uma representação $$z$$ vinda do espaço latente. O encoder e decoder são treinados em conjunto como uma única rede, mas após treinado eles podem ser usados para fazerem inferências em conjunto (ex.: para detecção de anomalias a partir do erro de reconstrução ou compressão de dados) ou separadamente: o encoder para gerar **embeddings** (representation learning), e o decoder para gerar novas amostras a partir de $$z$$'s amostrados aleatoriamente. Como o "labels" são derivados dos próprios dados de entrada ($$\mathcal{L}(\hat{X}, X)$$)), este tipo de aprendizado é comumente chamado de **aprendizado autossupervisionado**. Possui algumas variantes, como **variational autoencoders** (VAEs) e **vector quantized variational autoencoders** (VQ-VAEs).
 
 
 # Termos e Conceitos
